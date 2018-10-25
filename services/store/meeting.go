@@ -1,9 +1,5 @@
 package store
 
-import (
-	"fmt"
-)
-
 type Meeting struct {
 	Title         string
 	Participators []string
@@ -11,7 +7,16 @@ type Meeting struct {
 	EndTime       string
 }
 
+type Meetings []Meeting
+
 func CreateMeeting(meeting *Meeting) error {
-	fmt.Printf("Title: %s\n", meeting.Title)
+	client, err := GetClient()
+	if err != nil {
+		return err
+	}
+	if err := client.Commit(); err != nil {
+		return err
+	}
+	client.Dump()
 	return nil
 }
