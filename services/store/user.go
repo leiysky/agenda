@@ -1,5 +1,7 @@
 package store
 
+import "errors"
+
 type UserType struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -75,4 +77,39 @@ func GetAllUsers() (UsersType, error) {
 	}
 	users := client.getUsers()
 	return users, nil
+}
+
+func DeleteUserByName(name string) error {
+	client, err := GetClient()
+	if err != nil {
+		return err
+	}
+	users := client.DB.Collection.Users
+	isExist := false
+	for idx, one := range users {
+		if one.Username == name {
+			users = append(users[:idx], users[idx+1:]...)
+			isExist = true
+			break
+		}
+	}
+	if !isExist {
+		return errors.New("the user doesn't exist")
+	}
+
+	meetings := client.getMeetings()
+	isExist = false
+	for idx, one := range meetings {
+		if one.Participators[0] == name {
+			meetings = append(meetings[:idx], meetings[idx+1:]...)
+			isExist = true
+			break
+		}
+	}
+
+	client.DB.Collection.Users = users
+	if err := client.Commit(); err != nil {
+		return err
+	}
+	return client.Dump()
 }

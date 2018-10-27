@@ -13,8 +13,8 @@ type logoutOptions struct {
 func newLogoutCommand() *cobra.Command {
 	var options logoutOptions
 	cmd := &cobra.Command{
-		Use:   "login USERNAME PASSWORD",
-		Short: "login",
+		Use:   "logout USERNAME PASSWORD",
+		Short: "logout",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			options.refs = args
 			return runLogoutCommand(options)
