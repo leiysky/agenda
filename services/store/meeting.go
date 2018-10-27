@@ -54,6 +54,20 @@ func (meeting *MeetingType) AddParticipator(participator string) error {
 	return nil
 }
 
+func (meeting *MeetingType) DeleteParticipator(participator string) error {
+	user := UserType{participator, ""}
+	if !user.IsExist() {
+		return errors.New(participator + " is a invalid user")
+	}
+	for idx, one := range meeting.Participators {
+		if one == user.Username {
+			meeting.Participators = append(meeting.Participators[:idx], meeting.Participators[idx+1:]...)
+			return nil
+		}
+	}
+	return errors.New("participator isn't in the meeting")
+}
+
 func DeleteMeetingByName(name string) error {
 	client, err := GetClient()
 	if err != nil {
