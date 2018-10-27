@@ -16,7 +16,7 @@ func newCreateParticipatorCommand() *cobra.Command {
 	var options cpOptions
 	cmd := &cobra.Command{
 		Use:   "cp MEETING [...PARTICIPATORS]",
-		Short: "",
+		Short: "add participators to meeting",
 		Args: func(cmd *cobra.Command, args []string) error {
 			if len(args) < 2 {
 				return errors.New("requires at least 2 arguments")

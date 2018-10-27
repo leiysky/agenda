@@ -24,6 +24,7 @@ func NewAgendaCommand() *cobra.Command {
 		newRegisterCommand(),
 		newLoginCommand(),
 		newCreateParticipatorCommand(),
+		newDeleteParticipatorCommand(),
 		newDeleteMeetingCommand(),
 	)
 	return cmd
