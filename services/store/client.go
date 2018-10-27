@@ -18,10 +18,12 @@ type DBType struct {
 
 type SessionType struct {
 	Username string `json:"username"`
+	// LoginAt  DateType `json:"login_at"`
 }
 
 type CollectionType struct {
-	Meetings Meetings `json:"meetings"`
+	Meetings []MeetingType `json:"meetings"`
+	Users    []UserType    `json:"users"`
 }
 
 // GetClient Get a Client instance
@@ -31,7 +33,7 @@ func GetClient() (*ClientType, error) {
 	if err != nil {
 		return nil, errors.New("Opening data file failed")
 	}
-	if err := json.Unmarshal(buff, &client); err != nil {
+	if err := json.Unmarshal(buff, &client.DB); err != nil {
 		return nil, err
 	}
 	return &client, nil
