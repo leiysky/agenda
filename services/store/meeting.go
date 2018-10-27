@@ -91,3 +91,12 @@ func DeleteMeetingByName(name string) error {
 	}
 	return client.Dump()
 }
+
+func GetAllMeetings() (MeetingsType, error) {
+	client, err := GetClient()
+	if err != nil {
+		return nil, err
+	}
+	meetings := client.getMeetings()
+	return meetings, nil
+}
