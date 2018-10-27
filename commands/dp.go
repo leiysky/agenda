@@ -55,6 +55,9 @@ func runDeleteParticipatorCommand(opts dpOptions) error {
 			return err
 		}
 	}
+	if len(meeting.Participators) == 0 {
+		store.DeleteMeetingByName(meeting.Title)
+	}
 	if err := client.Commit(); err != nil {
 		return err
 	}

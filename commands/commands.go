@@ -23,6 +23,8 @@ func NewAgendaCommand() *cobra.Command {
 		newCreateMeetingCommand(),
 		newRegisterCommand(),
 		newLoginCommand(),
+		newLogoutCommand(),
+		newQueryUserCommand(),
 		newCreateParticipatorCommand(),
 		newDeleteParticipatorCommand(),
 		newDeleteMeetingCommand(),

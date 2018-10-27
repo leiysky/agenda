@@ -67,3 +67,12 @@ func (user UserType) IsExist() bool {
 	}
 	return false
 }
+
+func GetAllUsers() (UsersType, error) {
+	client, err := GetClient()
+	if err != nil {
+		return nil, err
+	}
+	users := client.getUsers()
+	return users, nil
+}
