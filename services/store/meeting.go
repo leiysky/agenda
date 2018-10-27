@@ -53,3 +53,27 @@ func (meeting *MeetingType) AddParticipator(participator string) error {
 	meeting.Participators = append(meeting.Participators, participator)
 	return nil
 }
+
+func DeleteMeetingByName(name string) error {
+	client, err := GetClient()
+	if err != nil {
+		return err
+	}
+	meetings := client.getMeetings()
+	isExist := false
+	for idx, one := range meetings {
+		if one.Title == name {
+			meetings = append(meetings[:idx], meetings[idx+1:]...)
+			isExist = true
+			break
+		}
+	}
+	if !isExist {
+		return errors.New("the meeting doesn't exist")
+	}
+	client.setMeetings(meetings)
+	if err := client.Commit(); err != nil {
+		return err
+	}
+	return client.Dump()
+}
